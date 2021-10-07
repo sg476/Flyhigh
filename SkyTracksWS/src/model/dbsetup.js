@@ -56,7 +56,28 @@ const bookingDB = [{
     ]
 }]
 
-exports.setupDb = () => {
+exports.setupDb = async () => {
+    try {
+        let bookingCollection = await collection.getBookingCollection();
+        let deleteOldBookingDB = await bookingCollection.deleteMany();
+        let newBookingDB = await bookingCollection.insertMany(bookingDB, {
+            useUnifiedTopology: true
+        });
+        let flightCollection = await collection.getFlightCollection();
+        let deleteOldFlightDB = await flightCollection.deleteMany();
+        let newFlightDB = await flightCollection.insertMany(flightDb, {
+            useUnifiedTopology: true
+        });
+        if (newFlightDB) return "Insertion Successfull"
+        else {
+            let err = new Error("Insertion failed");
+            err.status = 400;
+            throw err;
+        }
+    } catch (error) {
+        throw error
+    }
+    /*
     return collection.getBookingCollection().then((booking) => {
         return booking.deleteMany().then(() => {
             return booking.insertMany(bookingDB).then(() => {
@@ -75,4 +96,5 @@ exports.setupDb = () => {
             })
         })
     })
+    */
 }

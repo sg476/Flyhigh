@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./routes/routing');
-const myErrorLogger = require('./utilities/errorlogger');
-const myRequestLogger = require('./utilities/requestlogger');
+const myErrorLogger = require('./utilities/errorLogger');
+const myRequestLogger = require('./utilities/requestLogger');
 const cors = require("cors")
 const app = express();
 

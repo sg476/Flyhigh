@@ -5,12 +5,20 @@ const flightBookingServ = require('../service/users');
 const FlightBooking = require('../model/flightbooking');
 
 // setup db mongoose db
-routing.get('/setupDb', (req, res, next) => {
+routing.get('/setupDb', async (req, res, next) => {
+    try {
+        let response = await create.setupDb();
+        res.send(response);
+    } catch (error) {
+        next(error);
+    }
+    /*
     create.setupDb().then((data) => {
         res.send(data)
     }).catch((err) => {
         next(err)
     })
+    */
 })
 
 routing.get('/evaluate', (req, res, next) => {
